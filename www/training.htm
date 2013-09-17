@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title></title>
+ <!-- <link rel="stylesheet" type="text/css" href="mainstyle.css"> !-->
+<script language="JavaScript" type="text/javascript">
+/*<![CDATA[*/
+  var TimeArray = new Array ();
+// Взрослые. Гимнастика
+  TimeArray[0] = new Array ("19:30-20:30",""            ,"19:30-20:30",""           ,"19:30-20:30",""            ,"Рогозина Марина Анатолиевна");
+// Взрослые. Прыжки на батуте
+  TimeArray[1] = new Array ("19:30-20:30","19:30-22:00" ,"19:30-22:00","19:30-22:00","19:30-22:00",""            ,"Бакаленко Лилия Викторовна");
+//!!!!!!!!!!!!!!Выдать сообщение о том, что посещение занятий только по записи, телефон тренера 095-817-64-00  
+// Прыжки на батуте
+  TimeArray[2] = new Array ("17:00-18:00",""            ,"17:00-18:00",""           ,"17:00-18:00",""            ,"Бакаленко Лилия Викторовна");
+  TimeArray[3] = new Array ("18:00-19:00",""            ,"18:00-19:00",""           ,"18:00-19:00",""            ,"Бакаленко Лилия Викторовна");
+  TimeArray[4] = new Array ("17:00-18:20",""            ,"17:00-18:20",""           ,"17:00-18:20",""            ,"Кучеренко Иван Михайлович");
+// "Для самых маленьких"
+  TimeArray[5] = new Array ("18:15-19:00",""            ,"18:15-19:00",""           ,"18:15-19:00",""            ,"Дороганчук Лилия Николаевна");
+  TimeArray[6] = new Array ("19:00-19:45",""            ,"19:00-19:45",""           ,"19:00-19:45",""            ,"Дороганчук Лилия Николаевна");
+// Спортивная гимнастика
+  TimeArray[7] = new Array ("16:00-17:00",""            ,"16:00-17:00",""           ,"16:00-17:00",""            ,"Галенда Анна Андреевна");
+  TimeArray[8] = new Array ("17:00-18:00",""            ,"17:00-18:00",""           ,"17:00-18:00",""            ,"Галенда Анна Андреевна");
+  TimeArray[9] = new Array ("18:00-19:00",""            ,"18:00-19:00",""           ,"18:00-19:00",""            ,"Галенда Анна Андреевна");
+  TimeArray[10] = new Array ("18:30-19:30",""           ,"18:30-19:30",""           ,"18:30-19:30",""            ,"Рогозина Марина Анатольевна");
+  TimeArray[11] = new Array (""           ,"16:30-18:00",""           ,"16:30-18:00",""           ,"10:30-12:00" ,"Галенда Анна Андреевна");
+  TimeArray[12] = new Array (""           ,"17:00-18:00",""           ,"17:00-18:00",""           ,""            ,"Лощагина Оксана Олеговна");
+// Художественная гимнастика
+  TimeArray[13] = new Array ("16:00-17:30",""           ,"16:00-17:30",""           ,"16:00-17:30",""            ,"Остапчук Наталья Владимировна");
+  TimeArray[14] = new Array ("17:30-19:00",""           ,"17:30-19:00",""           ,"17:30-19:00",""            ,"Куракина Юлия Нмколаевна");
+  TimeArray[15] = new Array ("19:00-20:00",""           ,"19:00-20:00",""           ,"19:00-20:00",""            ,"Куракина Юлия Николаевна");
+
+
+function DrawRow(RowNumber,TimeNumber){
+  var i,j;
+  var tRow, tCell;
+    tRow = Main.rows[RowNumber];
+    for (j=0; j<7; j++)
+    {
+      tCell = tRow.insertCell(-1);
+      tCell.innerHTML = TimeArray[TimeNumber][j];
+    }
+}
+
+function ShowTable(GroupType){
+  for (var count=1;count<4;count++){
+    while (Main.rows[count].cells.length>0) {
+    Main.rows[count].deleteCell(0);
+    }
+  }
+
+  var SAge = document.getElementById('age');
+
+  switch (GroupType){
+  //Для самых маленьких
+    case '0': DrawRow(1,5);DrawRow(2,6);
+	break;
+  //Спортивная гимнастика
+    case '1': if(SAge.options[SAge.selectedIndex].value<8){DrawRow(1,8);DrawRow(2,9);DrawRow(3,12);}else {DrawRow(1,7);DrawRow(2,10);DrawRow(3,11);}
+    break;
+  //Художественная гимнастика    
+    case '2': if(SAge.options[SAge.selectedIndex].value>6){DrawRow(1,13);DrawRow(2,14);}else DrawRow(1,15);
+	break;
+  //Прыжки на батуте
+    case '3':if(SAge.options[SAge.selectedIndex].value<7){DrawRow(1,2);DrawRow(2,3);}else DrawRow(1,4);
+	break;
+  //Взрослые. Гимнастика  
+    case '4':DrawRow(1,0);
+	break;
+  //Взрослые. Прыжки на батуте
+    case '5':DrawRow(1,1);
+	break;
+  }
+}
+function GenderCheck(){
+  var Gender = document.getElementById('gendr');
+  var Age = document.getElementById('age');
+  if (Gender.selectedIndex>0){
+    Age.disabled=false;
+
+  }else {
+    Age.options[0].selected=true;
+    Age.disabled=true;
+    }
+  AgeCheck();
+}
+function AgeCheck(){
+  var i;
+  var Child = document.getElementById("type");
+
+  for (i=0;i<6;i++){
+    document.forms['child'].elements['type'][i].disabled=true;
+    document.forms['child'].elements['type'][i].checked=false;
+  }
+
+  var ObjElem = document.getElementById("age");
+  var SelAge = ObjElem.options[ObjElem.selectedIndex].value;
+  var SGender = document.getElementById('gendr');
+  SGender.selectedIndex;
+
+  if (SelAge!=0){
+
+  if (SelAge<3){
+    document.forms['child'].elements['type'][0].disabled=false;
+  } else
+  if (SelAge<15){
+    document.forms['child'].elements['type'][1].disabled=false;
+    if (SGender.selectedIndex==2){document.forms['child'].elements['type'][2].disabled=false;}
+    document.forms['child'].elements['type'][3].disabled=false;
+
+  } else
+  if(SelAge<17){
+    document.forms['child'].elements['type'][3].disabled=false;
+    document.forms['child'].elements['type'][4].disabled=false;
+    document.forms['child'].elements['type'][5].disabled=false;
+  } else
+  {
+    document.forms['child'].elements['type'][4].disabled=false;
+    document.forms['child'].elements['type'][5].disabled=false;
+  }
+  }
+}
+/*]]>*/
+</script>
+</head>
+<body>
+<form name="child">
+<fieldset style="width:300px">
+
+<select id="gendr" onchange="GenderCheck();">
+    <option>Пол ребенка</option>
+    <option>Мальчик</option>
+    <option>Девочка</option>
+</select>
+
+<select id="age" onchange="AgeCheck();" disabled="disabled">
+    <option value="0">Возраст</option>
+    <option value="1">2 - 2,5 года</option>
+    <option value="2">2,5 - 3 года</option>
+    <option value="3">3 - 3,5 года</option>
+    <option value="4">3,5 - 4 года</option>
+    <option value="5">4 - 4,5 года</option>
+    <option value="6">4,5 - 5 лет</option>
+    <option value="7">5 - 6 лет</option>
+    <option value="8">6 - 7 лет</option>
+    <option value="9">7 - 8 лет</option>
+    <option value="10">8 - 9 лет</option>
+    <option value="11">9 - 10 лет</option>
+    <option value="12">10 - 11 лет</option>
+    <option value="13">11 - 12 лет</option>
+    <option value="14">12 - 13 лет</option>
+    <option value="15">13 - 14 лет</option>
+    <option value="16">14 - 18 лет</option>
+    <option value="17">старше 18</option>
+</select>
+
+<fieldset style="width:250px; text-align: left"><legend>Вид спорта</legend>
+   <input type="radio" id="type" name="tp" onclick="ShowTable('0')"  disabled="disabled">Для самых маленьких<br>
+   <input type="radio" id="type" name="tp" onclick="ShowTable('1')"  disabled="disabled">Спортивная гимнастика<br>
+   <input type="radio" id="type" name="tp" onclick="ShowTable('2')"  disabled="disabled">Художественная гимнастика<br>
+   <input type="radio" id="type" name="tp" onclick="ShowTable('3')"  disabled="disabled">Прыжки на батуте<br>
+   <input type="radio" id="type" name="tp" onclick="ShowTable('4')"  disabled="disabled">Взрослые. Гимнастика<br>
+   <input type="radio" id="type" name="tp" onclick="ShowTable('5')"  disabled="disabled">Взрослые. Прыжки на батуте<br>
+</fieldset>
+</fieldset>
+</form>
+<table border="1" id="Main">
+<tr>
+   <td><b>Понедельник<b></td>
+   <td width="100"><b>Вторник</b></td>
+   <td width="100"><b>Среда<b></td>
+   <td width="100"><b>Четверг</b></td>
+   <td width="100"><b>Пятница</b></td>
+   <td width="100"><b>Суббота</b></td>
+   <td width="100"><b>Тренер</b></td>
+</tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+</table>
+</body>
+
+</html>
